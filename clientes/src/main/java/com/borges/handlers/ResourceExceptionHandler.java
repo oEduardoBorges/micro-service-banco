@@ -16,7 +16,7 @@ import java.time.Instant;
 public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<StandardError> handleLojaException(EntityNotFoundException e, HttpServletRequest request) {
+    public ResponseEntity<StandardError> handleEntityNotFoundException(EntityNotFoundException e, HttpServletRequest request) {
         String error = "Recurso não encontrado.";
         StandardError apiError = new StandardError(Instant.now(), HttpStatus.NOT_FOUND.value(), error, e.getMsg(), request.getRequestURI());
         return new ResponseEntity<StandardError>(apiError, new HttpHeaders(), apiError.getStatus());

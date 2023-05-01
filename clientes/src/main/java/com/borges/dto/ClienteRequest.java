@@ -7,8 +7,7 @@ public record ClienteRequest(
         @Column(unique = true)
         String cpf,
         String nome,
-        Integer idade,
-        Boolean status
+        Integer idade
 ){
         public ClienteRequest {
                 if(nome != null) nome = nome.trim();

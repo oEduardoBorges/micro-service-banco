@@ -13,7 +13,6 @@ import org.hibernate.annotations.Where;
 @Getter
 @Setter
 @Table(name = "tb_cliente")
-@Where(clause = "status = true")
 public class Cliente {
 
     @Id
