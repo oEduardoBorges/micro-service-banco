@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: cartoes-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/cartoes-service?createDatabaseIfNotExist=True
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
