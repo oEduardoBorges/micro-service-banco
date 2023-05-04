@@ -38,10 +38,6 @@ public class CartaoController {
 
     @GetMapping(params = "cpf")
     public ResponseEntity<List<CartoesPorClienteResponse>> getCartoesByCliente(@RequestParam("cpf") String cpf){
-        List<ClienteCartao> lista = clienteCartaoService.listaCartoesPorCpf(cpf);
-        List<CartoesPorClienteResponse> resultList = lista.stream()
-                .map(CartoesPorClienteResponse::fromModel)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(resultList);
+        return ResponseEntity.status(HttpStatus.OK).body(clienteCartaoService.listaCartoesPorCpf(cpf));
     }
 }

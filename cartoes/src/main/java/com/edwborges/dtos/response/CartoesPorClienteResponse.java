@@ -1,24 +1,12 @@
 package com.edwborges.dtos.response;
 
-import com.edwborges.models.ClienteCartao;
-import lombok.*;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class CartoesPorClienteResponse {
-    private String nome;
-    private String bandeira;
-    private BigDecimal limiteLiberado;
-
-    public static CartoesPorClienteResponse fromModel(ClienteCartao model){
-        return new CartoesPorClienteResponse(
-                model.getCartao().getNome(),
-                model.getCartao().getBandeiraCartao().toString(),
-                model.getLimite()
-        );
-    }
-}
+@Builder
+public record CartoesPorClienteResponse(
+    String nome,
+    String bandeira,
+    BigDecimal limite
+){}
