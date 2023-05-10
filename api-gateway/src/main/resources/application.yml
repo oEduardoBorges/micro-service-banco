@@ -19,6 +19,11 @@ spring:
           predicates:
             - Path=/api/cartao/**
 
+        - id: avaliador-de-credito-service
+          uri: lb://avaliador-de-credito-service
+          predicates:
+            - Path=/api/avaliacoes-credito/**
+
 
   server:
     port: 8080
