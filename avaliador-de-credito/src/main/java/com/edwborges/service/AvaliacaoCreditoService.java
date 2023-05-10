@@ -5,6 +5,10 @@ import com.edwborges.clients.ClienteClient;
 import com.edwborges.dtos.cartao.CartaoCliente;
 import com.edwborges.dtos.cliente.DadosCliente;
 import com.edwborges.dtos.SituacaoCliente;
+import com.edwborges.exceptions.DadosClienteNotFoundException;
+import com.edwborges.exceptions.ErroComunicacaoMicroservicesException;
+import feign.FeignException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +25,22 @@ public class AvaliacaoCreditoService {
         this.cartoesClient = cartoesClient;
     }
 
-    public SituacaoCliente obterSituacaoCliente(String cpf) {
-        ResponseEntity<DadosCliente> dadosClientePorCpf = clienteClient.buscarPorCpf(cpf);
-        ResponseEntity<List<CartaoCliente>> cartoesClientePorCpf = cartoesClient.CartoesPorCpfCliente(cpf);
+    public SituacaoCliente obterSituacaoCliente(String cpf) throws DadosClienteNotFoundException, ErroComunicacaoMicroservicesException {
+        try {
+            ResponseEntity<DadosCliente> dadosClientePorCpf = clienteClient.buscarPorCpf(cpf);
+            ResponseEntity<List<CartaoCliente>> cartoesClientePorCpf = cartoesClient.CartoesPorCpfCliente(cpf);
 
-        return SituacaoCliente.builder()
-                .cliente(dadosClientePorCpf.getBody())
-                .cartoes(cartoesClientePorCpf.getBody())
-                .build();
+            return SituacaoCliente.builder()
+                    .cliente(dadosClientePorCpf.getBody())
+                    .cartoes(cartoesClientePorCpf.getBody())
+                    .build();
+
+        }catch(FeignException.FeignClientException e) {
+            int status = e.status();
+            if(HttpStatus.NOT_FOUND.value() == status) {
+                throw new DadosClienteNotFoundException("Dados do cliente não encontrado para o CPF informado");
+            }
+            throw new ErroComunicacaoMicroservicesException(e.getMessage(), status);
+        }
     }
 }
