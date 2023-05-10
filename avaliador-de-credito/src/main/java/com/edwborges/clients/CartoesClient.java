@@ -12,5 +12,8 @@ import java.util.List;
 public interface CartoesClient {
 
     @GetMapping(params = "cpf")
-    ResponseEntity<List<CartaoCliente>> CartoesPorCpfCliente(@RequestParam("cpf") String cpf);
+    ResponseEntity<List<CartaoCliente>> getCartoesPorCliente(@RequestParam("cpf") String cpf);
+
+    @GetMapping(params = "renda")
+    ResponseEntity<List<CartaoCliente>> getCartoesRendaAte(@RequestParam("renda") Long renda);
 }
