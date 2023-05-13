@@ -2,6 +2,7 @@ package com.edwborges.handlers;
 
 import com.edwborges.exceptions.DadosClienteNotFoundException;
 import com.edwborges.exceptions.ErroComunicacaoMicroservicesException;
+import com.edwborges.exceptions.ErroSolicitacaoCartaoException;
 import com.edwborges.exceptions.StandardError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +28,13 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<StandardError> handleComunicacaoMicroservicesException(ErroComunicacaoMicroservicesException e, HttpServletRequest request) {
         String error = "Recurso não encontrado.";
         StandardError apiError = new StandardError(Instant.now(), HttpStatus.NOT_FOUND.value(), error, e.getMsg(), request.getRequestURI());
+        return new ResponseEntity<StandardError>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler(ErroSolicitacaoCartaoException.class)
+    public ResponseEntity<StandardError> handleErroSolicitacaoCartaoException(ErroSolicitacaoCartaoException e, HttpServletRequest request) {
+        String error = "Recurso não encontrado.";
+        StandardError apiError = new StandardError(Instant.now(), HttpStatus.NOT_FOUND.value(), error, e.getMessage(), request.getRequestURI());
         return new ResponseEntity<StandardError>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 }

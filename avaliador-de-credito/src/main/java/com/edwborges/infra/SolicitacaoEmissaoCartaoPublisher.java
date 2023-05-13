@@ -19,13 +19,13 @@ public class SolicitacaoEmissaoCartaoPublisher {
     }
 
     public void solicitarCartao(DadosSolicitacaoEmissaoCartao dadosSolicitacaoEmissaoCartao) throws JsonProcessingException {
-        var json = converteEmJson(dadosSolicitacaoEmissaoCartao);
+        var json = convertEmJson(dadosSolicitacaoEmissaoCartao);
         rabbitTemplate.convertAndSend(queueEmissaoCartoes.getName(), json);
     }
 
-    private String converteEmJson(DadosSolicitacaoEmissaoCartao dados) throws JsonProcessingException {
+    private String convertEmJson(DadosSolicitacaoEmissaoCartao dadosSolicitacaoEmissaoCartao) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
-        var json = mapper.writeValueAsString(dados);
+        var json = mapper.writeValueAsString(dadosSolicitacaoEmissaoCartao);
         return json;
     }
 }

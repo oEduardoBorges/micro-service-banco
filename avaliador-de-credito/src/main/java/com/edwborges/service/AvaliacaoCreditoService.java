@@ -2,13 +2,13 @@ package com.edwborges.service;
 
 import com.edwborges.clients.CartoesClient;
 import com.edwborges.clients.ClienteClient;
-import com.edwborges.dtos.CartaoAprovado;
-import com.edwborges.dtos.RetornoAvaliacaoCliente;
+import com.edwborges.dtos.*;
 import com.edwborges.dtos.cartao.CartaoCliente;
 import com.edwborges.dtos.cliente.DadosCliente;
-import com.edwborges.dtos.SituacaoCliente;
 import com.edwborges.exceptions.DadosClienteNotFoundException;
 import com.edwborges.exceptions.ErroComunicacaoMicroservicesException;
+import com.edwborges.exceptions.ErroSolicitacaoCartaoException;
+import com.edwborges.infra.SolicitacaoEmissaoCartaoPublisher;
 import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,10 +24,12 @@ public class AvaliacaoCreditoService {
 
     private final ClienteClient clienteClient;
     private final CartoesClient cartoesClient;
+    private final SolicitacaoEmissaoCartaoPublisher solicitacaoEmissaoCartaoPublisher;
 
-    public AvaliacaoCreditoService(ClienteClient clienteClient, CartoesClient cartoesClient) {
+    public AvaliacaoCreditoService(ClienteClient clienteClient, CartoesClient cartoesClient, SolicitacaoEmissaoCartaoPublisher solicitacaoEmissaoCartaoPublisher) {
         this.clienteClient = clienteClient;
         this.cartoesClient = cartoesClient;
+        this.solicitacaoEmissaoCartaoPublisher = solicitacaoEmissaoCartaoPublisher;
     }
 
     public SituacaoCliente obterSituacaoCliente(String cpf) throws DadosClienteNotFoundException, ErroComunicacaoMicroservicesException {
@@ -80,6 +83,16 @@ public class AvaliacaoCreditoService {
                 throw new DadosClienteNotFoundException("Dados do cliente não encontrado para o CPF informado");
             }
             throw new ErroComunicacaoMicroservicesException(e.getMessage(), status);
+        }
+    }
+
+    public ProtocoloSolicitacaoCartao solicitarEmissaoCartao(DadosSolicitacaoEmissaoCartao dadosSolicitacaoEmissaoCartao){
+        try{
+            solicitacaoEmissaoCartaoPublisher.solicitarCartao(dadosSolicitacaoEmissaoCartao);
+            var protocolo = UUID.randomUUID().toString();
+            return new ProtocoloSolicitacaoCartao(protocolo);
+        }catch (Exception e){
+            throw new ErroSolicitacaoCartaoException(e.getMessage());
         }
     }
 }
