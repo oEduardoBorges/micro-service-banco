@@ -1,4 +1,9 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/msbanco
   application:
     name: api-gateway
   cloud:
@@ -7,6 +12,7 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+
 
       routes:
         - id: clientes-service
@@ -23,7 +29,6 @@ spring:
           uri: lb://avaliador-de-credito-service
           predicates:
             - Path=/api/avaliacoes-credito/**, /api/solicitacao-cartao/**
-
 
   server:
     port: 8080
