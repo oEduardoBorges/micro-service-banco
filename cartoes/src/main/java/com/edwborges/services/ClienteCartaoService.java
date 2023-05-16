@@ -25,7 +25,7 @@ public class ClienteCartaoService {
         }
         List<CartoesPorClienteResponse> build = Collections.singletonList(CartoesPorClienteResponse.builder()
                 .nome(cartoes.get(1).getCartao().getNome())
-                .bandeira(cartoes.get(1).getCartao().getBandeiraCartao().toString())
+                .bandeiraCartao(cartoes.get(1).getCartao().getBandeiraCartao().toString())
                 .limite(cartoes.get(1).getLimite())
                 .build());
         return build;

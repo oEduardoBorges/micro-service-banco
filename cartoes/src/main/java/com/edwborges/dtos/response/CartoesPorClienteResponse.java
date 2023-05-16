@@ -7,6 +7,6 @@ import java.math.BigDecimal;
 @Builder
 public record CartoesPorClienteResponse(
     String nome,
-    String bandeira,
+    String bandeiraCartao,
     BigDecimal limite
 ){}

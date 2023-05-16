@@ -22,7 +22,7 @@ spring:
         - id: avaliador-de-credito-service
           uri: lb://avaliador-de-credito-service
           predicates:
-            - Path=/api/avaliacoes-credito/**
+            - Path=/api/avaliacoes-credito/**, /api/solicitacao-cartao/**
 
 
   server:

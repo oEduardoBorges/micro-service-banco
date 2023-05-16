@@ -9,6 +9,5 @@ public class DadosSolicitacaoEmissaoCartao {
 
     private Long cartaoId;
     private String cpf;
-    private String endereco;
     private BigDecimal limite;
 }
