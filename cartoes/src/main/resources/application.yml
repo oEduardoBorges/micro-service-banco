@@ -27,3 +27,9 @@ eureka:
 mq:
   queues:
     emissao-cartoes: emissao-cartoes
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
