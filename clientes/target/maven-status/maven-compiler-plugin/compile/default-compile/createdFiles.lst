@@ -1,0 +1,16 @@
+com\edwborges\controller\ClienteController.class
+com\edwborges\mapper\request\ClienteRequestMapper.class
+com\edwborges\mapper\response\ClienteResponseMapper.class
+com\edwborges\service\ClienteService.class
+com\edwborges\dto\ClienteRequest.class
+com\edwborges\dto\AtualizarClienteRequest.class
+com\edwborges\mapper\generic\GenericMapper.class
+com\edwborges\repository\ClienteRepository.class
+com\edwborges\exceptions\StandardError.class
+com\edwborges\handlers\ResourceExceptionHandler.class
+com\edwborges\ClientesApplication.class
+com\edwborges\mapper\response\ClienteResponseMapperImpl.class
+com\edwborges\model\Cliente.class
+com\edwborges\exceptions\EntityNotFoundException.class
+com\edwborges\mapper\request\ClienteRequestMapperImpl.class
+com\edwborges\dto\ClienteResponse.class

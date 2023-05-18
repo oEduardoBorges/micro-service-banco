@@ -1,0 +1,41 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/msbanco
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+
+      routes:
+        - id: clientes-service
+          uri: lb://clientes-service
+          predicates:
+            - Path=/api/clientes/**
+
+        - id: cartoes-service
+          uri: lb://cartoes-service
+          predicates:
+            - Path=/api/cartao/**
+
+        - id: avaliador-de-credito-service
+          uri: lb://avaliador-de-credito-service
+          predicates:
+            - Path=/api/avaliacoes-credito/**, /api/solicitacao-cartao/**
+
+  server:
+    port: 8080
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka

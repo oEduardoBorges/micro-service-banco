@@ -9,8 +9,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
         <module name="avaliador-de-credito" />
+        <module name="eureka-server" />
       </profile>
-      <profile name="Annotation profile for clientes" enabled="true">
+      <profile name="Annotation profile for microservices-banco" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -29,6 +30,8 @@
       <module name="cartoes" target="17" />
       <module name="clientes" target="17" />
       <module name="eureka-server" target="17" />
+      <module name="gateway" target="17" />
+      <module name="microservices-banco" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -38,6 +41,7 @@
       <module name="cartoes" options="-parameters" />
       <module name="clientes" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="gateway" options="-parameters" />
     </option>
   </component>
 </project>
